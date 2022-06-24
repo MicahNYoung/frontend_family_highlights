@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.FamilyMember-form {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  max-width: 1000px;
+}
