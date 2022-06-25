@@ -17,10 +17,12 @@ export default function FormPropsTextFields() {
     const [dadLastName, setDadLastName] = React.useState("");
     const [dadFirstName, setDadFirstName] = React.useState("");
     const [familyId, setFamilyId] = React.useState("");
+    const [familyName, setFamilyName] = React.useState("");
+    const [needFamilyId, setNeedFamilyId] = React.useState(false);
 
     const handleClick =(e) =>{
         e.preventDefault()
-        const familyMember = {email,firstName,lastName, username, password, momFirstName, momLastName, dadFirstName, dadLastName, familyId}
+        const familyMember = {email,firstName,lastName, username, password, momFirstName, momLastName, dadFirstName, dadLastName, familyId, familyName}
         console.log(familyMember)
         fetch("http://localhost:8080/familymember/add?familyId=" +familyMember.familyId,{
             method:"POST",
@@ -32,7 +34,10 @@ export default function FormPropsTextFields() {
         })
         }
        
-    
+    const handleNewFamily =(e)=>{
+      setNeedFamilyId(true);
+      console.log(needFamilyId);
+    }
     return (
       <Container className="FamilyMember-form">
           <h1>New User</h1>
@@ -126,10 +131,22 @@ export default function FormPropsTextFields() {
           label="Your Family ID"
           value={familyId}
           onChange={(e) => setFamilyId(e.target.value)}
-
         />
+        <div>
+          {needFamilyId === true && 
+          <TextField
+            required
+            id="outlined-required"
+            label="Your Family Name"
+            value={familyId}
+            onChange={(e) => setFamilyName(e.target.value)}
+          />}
+          
+        </div>
+
       </div>
       <Button variant="contained" onClick={handleClick}>Add User</Button>
+      <Button onClick={handleNewFamily}>New Family</Button>
 
     </Box>
     </Container>
