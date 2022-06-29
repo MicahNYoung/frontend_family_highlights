@@ -44,3 +44,11 @@
   align-items: center;
   max-width: 1000px;
 }
+
+.FamilyMember-card {
+  margin: 10px;
+}
+.FamilyMember-container {
+  display: flex;
+  
+}
