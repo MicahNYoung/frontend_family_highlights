@@ -1,5 +1,5 @@
 import React from "react"
-import FamilyMemberContainer from "./FamilyMembersContainer"
+import {FamilyMemberContainer} from "../hompage_components/FamilyMemberContainer"
 import Navbar from "../Navbar"
 
 export function HomePage(){

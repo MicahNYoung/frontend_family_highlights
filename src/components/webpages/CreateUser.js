@@ -33,7 +33,18 @@ export default function FormPropsTextFields() {
             console.log("New Family Member added");
         })
         }
-       
+
+    const [title, setTitle] = React.useState("");
+    fetch('http://localhost:8080/register')
+      .then(response => {
+        console.log(response)
+        return response.json();
+      })
+      .then(data => {
+        console.log(data)
+        setTitle(data)
+      })
+
     const handleNewFamily =(e)=>{
       setNeedFamilyId(true);
       console.log(needFamilyId);

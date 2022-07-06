@@ -4,16 +4,19 @@ import Navbar from "./components/Navbar.js"
 import FamilyMember from "./components//webpages/CreateUser"
 import { Login } from '@mui/icons-material';
 import LoginPage from "./components/webpages/LoginPage"
-import FamilyMemberContainer from "./components/webpages/FamilyMembersContainer"
+import {FamilyMemberContainer} from "./components/hompage_components/FamilyMemberContainer"
+import {Link} from "react-router-dom";
 
 function App() {
   
   return (
     <div className="App">
-      <Navbar/>
+      <LoginPage/>
+      <Link to="/FamilyMemberContainer">Family Members</Link>
+      {/* <Navbar/>
       <FamilyMember/>
       <LoginPage/>
-      <FamilyMemberContainer/>
+      <FamilyMemberContainer/> */}
     </div>
   );
 }

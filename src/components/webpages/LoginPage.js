@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Container } from '@mui/system';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router';
 
 
 export default function FormPropsTextFields() {
@@ -17,20 +18,25 @@ export default function FormPropsTextFields() {
     const [dadFirstName, setDadFirstName] = React.useState("");
     const [familyId, setFamilyId] = React.useState("");
     const [familyName, setFamilyName] = React.useState("");
+    const [familyMember, setFamilyMember] = React.useState("")
     const [needFamilyId, setNeedFamilyId] = React.useState(false);
+    const [userLoggingIn, setUserLoggingIn] = React.useState({username:"", password:"" });
+  
+    const navigate = useNavigate();
 
     const handleClick =(e) =>{
         e.preventDefault()
-        const familyMember = {email,firstName,lastName, username, password, momFirstName, momLastName, dadFirstName, dadLastName, familyId, familyName}
-        console.log(familyMember)
-        fetch("http://localhost:8080/familymember/add?familyId=" +familyMember.familyId,{
-            method:"POST",
-            headers: {"Content-Type":"application/json"},
-            body:JSON.stringify(familyMember)
-
-        }).then(() => {
-            console.log("New Family Member added");
-        })
+        console.log(userLoggingIn.username)
+        fetch("http://localhost:8080/familymember/get?username=" + userLoggingIn.username)
+      .then(response => {
+        console.log(response)
+        return response.json();
+      })
+      .then(data => {
+        console.log("Family member is " + familyMember.firstName )
+        setFamilyMember(data)
+      })
+        navigate('/homepage')
         }
        
     const handleNewFamily =(e)=>{
@@ -38,7 +44,7 @@ export default function FormPropsTextFields() {
       console.log(needFamilyId);
     }
     return (
-      <Container className="FamilyMember-form">
+      <Container >
           <h1>Login</h1>
           <Box 
       component="form"
@@ -48,14 +54,14 @@ export default function FormPropsTextFields() {
       noValidate
       autoComplete="off"
     >
-      <div>
+      <form className="FamilyMember-form">
 
         <TextField
         required
           id="outlined-required"
           label="Username"
-        //   value={username}
-        //   onChange={(e) => setUsername(e.target.value)}
+          // value={username}
+          onChange={(e) => setUserLoggingIn(e.target.value)}
 
         />
          <TextField
@@ -70,10 +76,10 @@ export default function FormPropsTextFields() {
           />
         
 
-      </div>
-      <Button variant="contained" onClick={handleClick}>Login</Button>
-      <Button onClick={handleNewFamily}>New User?</Button>
-
+        
+        <Button variant="contained" onClick={handleClick}>Login</Button>
+        <Button onClick={handleNewFamily}>New User?</Button>
+      </form>
     </Box>
     </Container>
     

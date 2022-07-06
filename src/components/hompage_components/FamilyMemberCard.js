@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import FamilyMemberContainer from "./FamilyMembersContainer"
+import UserPage from "./FamilyMemberContainer"
 
 
 export default function BoxSx(props) {

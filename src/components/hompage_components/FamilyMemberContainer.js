@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import FamilyMemberCard from "./FamilyMemberCard"
 
-export default function UserPage(){
+export function FamilyMemberContainer(){
   // const [email, setEmail] = React.useState("")
   // const [firstName, setFirstName] = React.useState("");
   // const [lastName, setLastName] = React.useState("");
@@ -24,7 +24,7 @@ export default function UserPage(){
   // fetch('http://localhost:8080/familymember/getfamily?familyId=' +familyMember.familyId)
 
   useEffect(() => {
-    fetch("http://localhost:8080/familymember/getfamily/e461eb1e-f150-4369-aab7-f142cf03676b")
+    fetch("http://localhost:8080/familymember/getfamily/2950398d-a422-45a1-a3dc-f7a715bb139e")
       .then(response => {
         console.log(response)
         return response.json();
@@ -40,7 +40,8 @@ export default function UserPage(){
       console.log("family is not null")
       console.log(family)
       familyMemberElements = family.map((familyMem) => {
-        return <li>{familyMem.firstName}</li>
+        return <FamilyMemberCard 
+                name={familyMem.firstName + familyMem.lastName}/>
       })
     } 
     console.log("familyMemberElements: " + familyMemberElements)
