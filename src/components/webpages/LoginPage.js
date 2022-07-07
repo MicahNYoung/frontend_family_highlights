@@ -18,25 +18,104 @@ export default function FormPropsTextFields() {
     const [dadFirstName, setDadFirstName] = React.useState("");
     const [familyId, setFamilyId] = React.useState("");
     const [familyName, setFamilyName] = React.useState("");
-    const [familyMember, setFamilyMember] = React.useState("")
+    const [familyMember, setFamilyMember] = React.useState({})
+
     const [needFamilyId, setNeedFamilyId] = React.useState(false);
     const [userLoggingIn, setUserLoggingIn] = React.useState({username:"", password:"" });
+    const [testState, setTestState] = React.useState("")
   
     const navigate = useNavigate();
 
+    const handleChange = event => {
+      console.log(event.target.id)
+
+      ////Might be better using if/else
+      const updatedValue=(event.target.id === "username") ? {"username":event.target.value} : {"password":event.target.value}
+      console.log(updatedValue)
+        setUserLoggingIn(userLoggingIn => ({
+          ...userLoggingIn,
+          ...updatedValue
+        }))
+    }
+////Uncertain why this to navigate('homepage') are both necessary. Seems like the fetch in useEffect should be good.
+    React.useEffect(() => {
+      fetch("http://localhost:8080/familymember/get?username=" + userLoggingIn.username)
+      .then(response=> response.json())
+      .then(data => {
+        console.log(data)
+        const familyMemberId = data.id;
+        console.log("familyMemberId is " + familyMemberId)
+        return fetch("http://localhost:8080/family?familyMemberId=" + familyMemberId);
+      })
+      .then(familyResponse => familyResponse.text())
+      .then(data => {
+        const familyId = data
+        console.log(familyId)
+      });
+      
+      console.log(familyId);
+      
+      // console.log("useEffect is running!")
+      // fetch("http://localhost:8080/familymember/get?username=" + userLoggingIn.username)
+      // .then(response => {
+      //   console.log(response)
+      //   return response.json();
+      // })
+      // .then(data => {
+      //   console.log("------------")
+      //   console.log(data)
+      //   console.log("------------")
+      //   console.log(data.firstName)
+      //   setFamilyMember(prevState=> ({
+      //     ...prevState,
+      //     id: data.id,
+      //     firstName: data.firstName
+      //   }));
+      //     console.log(familyMember)
+      //   console.log("Family member is " + familyMember.firstName )
+
+      // })
+    },[testState])
+    
     const handleClick =(e) =>{
         e.preventDefault()
-        console.log(userLoggingIn.username)
-        fetch("http://localhost:8080/familymember/get?username=" + userLoggingIn.username)
-      .then(response => {
-        console.log(response)
-        return response.json();
-      })
-      .then(data => {
-        console.log("Family member is " + familyMember.firstName )
-        setFamilyMember(data)
-      })
-        navigate('/homepage')
+        setTestState("test")
+      //   console.log(userLoggingIn.username)
+      //   fetch("http://localhost:8080/familymember/get?username=" + userLoggingIn.username)
+      // .then(response => {
+      //   console.log(response)
+      //   return response.json();
+      // })
+      // .then(data => {
+      //   console.log("------------")
+      //   console.log(data)
+      //   console.log("------------")
+      //   console.log(data.firstName)
+      //   setFamilyMember(prevState=> ({
+      //     ...prevState,
+      //     id: data.id,
+      //     firstName: data.firstName
+      //   }));
+      //     console.log(familyMember)
+      //   console.log("Family member is " + familyMember.firstName )
+
+      // })
+      // fetch("http://localhost:8080/family?familyMemberId=" + familyMember.id)
+      // .then(response=> {
+      //   console.log(response)
+      //   return response.json();
+      // })
+      // .then(data=> {
+      //   console.log("$$$$$$$$$$")
+      //   console.log(data)
+      //   console.log("$$$$$$$$$$")
+
+      // })
+
+        // navigate({
+        //   pathname: '/homepage',
+        //   search: '?familyId=' + familyMember.familyId,
+        // })
         }
        
     const handleNewFamily =(e)=>{
@@ -58,20 +137,20 @@ export default function FormPropsTextFields() {
 
         <TextField
         required
-          id="outlined-required"
+          id="username"
           label="Username"
-          // value={username}
-          onChange={(e) => setUserLoggingIn(e.target.value)}
+          value={userLoggingIn.username}
+          onChange={handleChange}
 
         />
          <TextField
          required
-          id="outlined-password-input"
+          id="password"
           label="Password"
           type="password"
           placeholder="Your password"
-        //   value={password}
-        //   onChange={(e) => setPassword(e.target.value)}
+          value={userLoggingIn.password}
+          onChange={handleChange}
 
           />
         
