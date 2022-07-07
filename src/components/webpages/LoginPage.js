@@ -55,67 +55,12 @@ export default function FormPropsTextFields() {
       
       console.log(familyId);
       
-      // console.log("useEffect is running!")
-      // fetch("http://localhost:8080/familymember/get?username=" + userLoggingIn.username)
-      // .then(response => {
-      //   console.log(response)
-      //   return response.json();
-      // })
-      // .then(data => {
-      //   console.log("------------")
-      //   console.log(data)
-      //   console.log("------------")
-      //   console.log(data.firstName)
-      //   setFamilyMember(prevState=> ({
-      //     ...prevState,
-      //     id: data.id,
-      //     firstName: data.firstName
-      //   }));
-      //     console.log(familyMember)
-      //   console.log("Family member is " + familyMember.firstName )
-
-      // })
+   
     },[testState])
     
     const handleClick =(e) =>{
         e.preventDefault()
         setTestState("test")
-      //   console.log(userLoggingIn.username)
-      //   fetch("http://localhost:8080/familymember/get?username=" + userLoggingIn.username)
-      // .then(response => {
-      //   console.log(response)
-      //   return response.json();
-      // })
-      // .then(data => {
-      //   console.log("------------")
-      //   console.log(data)
-      //   console.log("------------")
-      //   console.log(data.firstName)
-      //   setFamilyMember(prevState=> ({
-      //     ...prevState,
-      //     id: data.id,
-      //     firstName: data.firstName
-      //   }));
-      //     console.log(familyMember)
-      //   console.log("Family member is " + familyMember.firstName )
-
-      // })
-      // fetch("http://localhost:8080/family?familyMemberId=" + familyMember.id)
-      // .then(response=> {
-      //   console.log(response)
-      //   return response.json();
-      // })
-      // .then(data=> {
-      //   console.log("$$$$$$$$$$")
-      //   console.log(data)
-      //   console.log("$$$$$$$$$$")
-
-      // })
-
-        // navigate({
-        //   pathname: '/homepage',
-        //   search: '?familyId=' + familyMember.familyId,
-        // })
         }
        
     const handleNewFamily =(e)=>{
