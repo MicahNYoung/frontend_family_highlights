@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, createSearchParams} from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Container } from '@mui/system';
@@ -22,6 +22,8 @@ export default function FormPropsTextFields() {
     const [userLoggingIn, setUserLoggingIn] = React.useState({username:"", password:"" });
     const [testState, setTestState] = React.useState("")
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+
 
     const [familyMemberId, setFamilyMemberId] = React.useState()
     const [familyId, setFamilyId] = React.useState()
@@ -140,21 +142,21 @@ export default function FormPropsTextFields() {
     // console.log("familyMemberId is: &&&&&&&&" + familyMemberId)
     //     console.log("familyId is: &&&&&&&&&&" + familyId)
        ////Cannot use useEffect for navigation because its getting twice on the two rerenders
-    useEffect(() => {
-      console.log("familyMemberId is: ++++++++++" + familyMemberId)
-      console.log("familyId is: +++++++++++" + familyId)
-      if(familyMemberIdSet === true) {
-        setTimeout(() => {
-          console.log("familyMemberId is: ++++++++++" + familyMemberId)
+       useEffect(() => {
+        console.log("familyMemberId is: ++++++++++" + familyMemberId)
         console.log("familyId is: +++++++++++" + familyId)
-          navigate({
-            pathname: '/homepage',
-            search: '?familyId=' + familyMemberId,
-          })
-        }, 1000)
-      }
-      
-    }, [familyMemberIdSet])
+        if(familyMemberIdSet === true) {
+          setTimeout(() => {
+            console.log("familyMemberId is: ++++++++++" + familyMemberId)
+          console.log("familyId is: +++++++++++" + familyId)
+            navigate({
+              pathname: '/homepage',
+              search: '?familyId=' + familyMemberId,
+            })
+          }, 1000)
+        }
+        
+      }, [familyMemberIdSet])
     // const handleClick =(e) =>{
        
 
