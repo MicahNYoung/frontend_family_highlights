@@ -1,4 +1,5 @@
 import React, { useEffect } from "react"
+import { useSearchParams } from "react-router-dom"
 import FamilyMemberCard from "./FamilyMemberCard"
 
 export function FamilyMemberContainer(){
@@ -17,14 +18,17 @@ export function FamilyMemberContainer(){
 
   const [familyMember, setFamilyMember] = React.useState(null)
   const [family, setFamily] = React.useState(null)
+  const [searchParams, setSearchParams] = useSearchParams();
   let familyMemberElements = null;
 
   // const familyMember = {email,firstName,lastName, username, password, momFirstName, momLastName, dadFirstName, dadLastName, familyId, familyName}
         // console.log("This is a familyMember: " + familyMember)
   // fetch('http://localhost:8080/familymember/getfamily?familyId=' +familyMember.familyId)
 
+  
+
   useEffect(() => {
-    fetch("http://localhost:8080/familymember/getfamily/2950398d-a422-45a1-a3dc-f7a715bb139e")
+    fetch("http://localhost:8080/familymember/getfamily/" + searchParams.get("familyId"))
       .then(response => {
         console.log(response)
         return response.json();

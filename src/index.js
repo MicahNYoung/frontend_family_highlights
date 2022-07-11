@@ -19,7 +19,8 @@ root.render(
       <Route path="createuser" element={<CreateUser/>} />
       <Route path="/" element={<App/>} />
       <Route path="/familymembers" element={<FamilyMemberContainer/>} />
-      <Route path="/homepage" element={<HomePage/>} />
+      
+      <Route path="/homepage/:familyId" element={<HomePage/>} />
 
 
     </Routes>
