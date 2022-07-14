@@ -1,4 +1,4 @@
-import React, {useEffect, useState, createSearchParams} from 'react';
+import React, {useEffect, useSearchParams, useState, createSearchParams} from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Container } from '@mui/system';
@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router';
 
 
-export default function FormPropsTextFields() {
+export default function FormPropsTextFields({setFamilyMember, familyMember}) {
     const [email, setEmail] = React.useState("")
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");
@@ -17,12 +17,11 @@ export default function FormPropsTextFields() {
     const [dadLastName, setDadLastName] = React.useState("");
     const [dadFirstName, setDadFirstName] = React.useState("");
     const [familyName, setFamilyName] = React.useState("");
-    const [familyMember, setFamilyMember] = React.useState({})
     const [needFamilyId, setNeedFamilyId] = React.useState(false);
     const [userLoggingIn, setUserLoggingIn] = React.useState({username:"", password:"" });
     const [testState, setTestState] = React.useState("")
     const navigate = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams();
+    // const [searchParams, setSearchParams] = useSearchParams();
 
 
     const [familyMemberId, setFamilyMemberId] = React.useState()
@@ -42,54 +41,7 @@ export default function FormPropsTextFields() {
         }))
     }
 
-    // function getValues(){
-    //   return fetch("http://localhost:8080/familymember/get?username=" + userLoggingIn.username)
-    //   .then(response=> response.json())
-    //   .then(data => {
-    //     console.log(data)
-    //     familyMemberId = data.id;
-    //     console.log("familyMemberId is " + familyMemberId)
-    //     return fetch("http://localhost:8080/family?familyMemberId=" + familyMemberId);
-    //   })
-    //   .then(familyResponse => familyResponse.text())
-    //   .then(data => {
-    //     setFamilyId(data);
-    //     console.log(familyId)
-    //     // return familyId;
-    //     // console.log(familyId)
-    //   });
-      
-    // }
 
-
-    // React.useEffect(() => {
-    //   setTimeout(1000)
-    //   fetch("http://localhost:8080/familymember/get?username=" + userLoggingIn.username)
-    //   .then(response=> response.json())
-    //   .then(data => {
-    //     console.log(data)
-    //     // familyMemberId = data.id;
-    //     setFamilyMemberId(prevState =>({...prevState, id:data.id}));
-    //     console.log("familyMemberId is " + familyMemberId.id)
-    //     return fetch("http://localhost:8080/family?familyMemberId=" + familyMemberId.id);
-    //   })
-    //   .then(familyResponse => familyResponse.text())
-    //   .then((data) => {
-    //     console.log("data being returned from /family?familyMemberId= is "+  data)
-    //     // familyId = data;
-    //     setFamilyId(prevState =>({...prevState, id:data}));
-    //     // return familyId;
-    //     // console.log("familyId is ::::::::::::::::::" + familyId.id)
-    //     // return familyId;
-    //     // console.log(familyId)
-    //   });
-      
-      
-    
-    //   console.log("familyMemberId is ======= " + familyMemberId.id)
-    //   console.log("familyId is ==========" + familyId.id);
-      
-    // },[testState, familyId, familyMemberId])
   
     const fetchFamilyId = (e) => {
       e.preventDefault()
@@ -100,8 +52,8 @@ export default function FormPropsTextFields() {
         // console.log(data)
         // familyMemberId = data.id;
         // if(familyMemberId){
-          setFamilyMemberId(data.id);
-
+          setFamilyMember(data);
+          // console.log(familyMember)
           setFamilyMemberIdSet(true)
         // }
         // console.log("useEffect 1 count: and " + familyMemberId);
@@ -109,49 +61,14 @@ export default function FormPropsTextFields() {
         // return fetch("http://localhost:8080/family?familyMemberId=" + familyMemberId.id);
       })
     }
-    // React.useEffect(() => {
-    //   let counter = 0;
-
-    //   fetch("http://localhost:8080/familymember/get?username=" + userLoggingIn.username)
-    //   .then(response=> response.json())
-    //   .then(data => {
-    //     console.log(data)
-    //     // familyMemberId = data.id;
-    //     // if(familyMemberId){
-    //       setFamilyMemberId(data.id);
-    //     // }
-    //     console.log("useEffect 1 count: " + counter + "and " + familyMemberId);
-
-    //     // return fetch("http://localhost:8080/family?familyMemberId=" + familyMemberId.id);
-    //   })
-    // },[testState])
-
-    // React.useEffect(() => {
-    //   let counter = 0;
-    //   fetch("http://localhost:8080/family?familyMemberId=" + familyMemberId)
-    //   .then(familyResponse => familyResponse.text())
-    //   .then(data => {
-    //     console.log("data being returned from /family?familyMemberId= is "+  data)
-    //     // familyId = data;
-    //     setFamilyId(data);
-    //     console.log("useEffect 2 count: " + counter + "and "  + familyId);
-    //   })
-    // }, [familyMemberId])
-
-    
-    // console.log("familyMemberId is: &&&&&&&&" + familyMemberId)
-    //     console.log("familyId is: &&&&&&&&&&" + familyId)
        ////Cannot use useEffect for navigation because its getting twice on the two rerenders
        useEffect(() => {
-        console.log("familyMemberId is: ++++++++++" + familyMemberId)
-        console.log("familyId is: +++++++++++" + familyId)
+      
         if(familyMemberIdSet === true) {
           setTimeout(() => {
-            console.log("familyMemberId is: ++++++++++" + familyMemberId)
-          console.log("familyId is: +++++++++++" + familyId)
+            
             navigate({
-              pathname: '/homepage',
-              search: '?familyId=' + familyMemberId,
+              pathname: '/homepage'
             })
           }, 1000)
         }
