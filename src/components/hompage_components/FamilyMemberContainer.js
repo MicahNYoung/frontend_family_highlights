@@ -1,55 +1,52 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
+import { useSearchParams } from "react-router-dom"
 import FamilyMemberCard from "./FamilyMemberCard"
 
-export function FamilyMemberContainer(){
-  // const [email, setEmail] = React.useState("")
-  // const [firstName, setFirstName] = React.useState("");
-  // const [lastName, setLastName] = React.useState("");
-  // const [username, setUsername] = React.useState("");
-  // const [password, setPassword] = React.useState("");
-  // const [momFirstName, setMomFirstName] = React.useState("");
-  // const [momLastName, setMomLastName] = React.useState("");
-  // const [dadLastName, setDadLastName] = React.useState("");
-  // const [dadFirstName, setDadFirstName] = React.useState("");
-  // const [familyId, setFamilyId] = React.useState("");
-  // const [familyName, setFamilyName] = React.useState("");
-  // const [needFamilyId, setNeedFamilyId] = React.useState(false);
+export function FamilyMemberContainer({famMember}){
 
-  const [familyMember, setFamilyMember] = React.useState(null)
+
   const [family, setFamily] = React.useState(null)
-  let familyMemberElements = null;
+  const [familyMemberElements, setFamilyMemberElements] = React.useState(null)
+  // let familyMemberElements = useRef([]);
 
-  // const familyMember = {email,firstName,lastName, username, password, momFirstName, momLastName, dadFirstName, dadLastName, familyId, familyName}
-        // console.log("This is a familyMember: " + familyMember)
-  // fetch('http://localhost:8080/familymember/getfamily?familyId=' +familyMember.familyId)
+  console.log("render ==========================================================================      New RENDER")
+    console.log(famMember)
 
   useEffect(() => {
-    fetch("http://localhost:8080/familymember/getfamily/2950398d-a422-45a1-a3dc-f7a715bb139e")
+    console.log(famMember)
+    if(famMember){
+      fetch("http://localhost:8080/familymember/getfamily/" + famMember.id)
       .then(response => {
         console.log(response)
         return response.json();
-      })
+      }) 
       .then(data => {
         console.log(data)
         setFamily(data)
       })
-  }, [])
+    }
+    
+  },[famMember])
    
   //family was coming back null
-    if(family) {
-      console.log("family is not null")
-      console.log(family)
-      familyMemberElements = family.map((familyMem) => {
-        return <FamilyMemberCard 
-                name={familyMem.firstName + familyMem.lastName}/>
-      })
-    } 
+    
+      useEffect(() => {
+        if(family!== null){
+          let famMemElementsData = family.map((famMem) => {
+            return <FamilyMemberCard 
+                    name={famMem.firstName + famMem.lastName}/>
+          })
+          setFamilyMemberElements(famMemElementsData)
+        }
+        
+
+      },[family])
+    
     console.log("familyMemberElements: " + familyMemberElements)
     return (   
-        //  <div className="FamilyMember-container">{cardElements}</div>\
         <div>
-         {familyMemberElements && <div className="FamilyMember-container">{familyMemberElements}</div>}
-
+          {familyMemberElements && famMember && <div className="FamilyMember-container">{familyMemberElements}</div>}
+          <p>Hello from the familyMemberContainer</p>
         </div>
 
     )

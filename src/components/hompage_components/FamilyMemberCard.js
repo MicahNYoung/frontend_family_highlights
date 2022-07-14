@@ -19,6 +19,7 @@ export default function BoxSx(props) {
     
         },
       }}>
+        <p>Hello from FamilyMemberCard</p>
           <h2>{props.name} </h2>
       </Box>
     
