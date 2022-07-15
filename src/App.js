@@ -8,6 +8,7 @@ import {FamilyMemberContainer} from "./components/hompage_components/FamilyMembe
 import {Link} from "react-router-dom";
 import React, {useState} from "react";
 import { HomePage } from './components/webpages/HomePage';
+import { CreateUser } from './components/webpages/CreateUser';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 
@@ -19,11 +20,11 @@ function App() {
 <BrowserRouter>
     <Routes>
 
-      <Route path="/" element={<LoginPage familyMember={familyMember} setFamilyMember={setFamilyMember}/>} />
-      {/* <Route path="createuser" element={<CreateUser/>} /> */}
+      <Route path="/" element={<LoginPage familyMember={familyMember} setFamilyMember={setFamilyMember} isNotLoginPage={false}/>} />
+      <Route path="createuser" element={<CreateUser isNotLoginPage={true}/>}  />
       {/* <Route path="/familymembers" element={<FamilyMemberContainer/>} /> */}
       
-      <Route path="/homepage" element={<HomePage familyMember={familyMember}/>} />
+      <Route path="/homepage" element={<HomePage familyMember={familyMember} isNotLoginPage={true}/>} />
 
 
     </Routes>

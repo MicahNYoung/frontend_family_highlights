@@ -6,7 +6,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 
 
-export default function FormPropsTextFields() {
+export function CreateUser() {
     const [email, setEmail] = React.useState("")
     const [firstName, setFirstName] = React.useState("");
     const [lastName, setLastName] = React.useState("");

@@ -9,19 +9,15 @@ export function FamilyMemberContainer({famMember}){
   const [familyMemberElements, setFamilyMemberElements] = React.useState(null)
   // let familyMemberElements = useRef([]);
 
-  console.log("render ==========================================================================      New RENDER")
-    console.log(famMember)
 
   useEffect(() => {
     console.log(famMember)
     if(famMember){
       fetch("http://localhost:8080/familymember/getfamily/" + famMember.id)
       .then(response => {
-        console.log(response)
         return response.json();
       }) 
       .then(data => {
-        console.log(data)
         setFamily(data)
       })
     }
@@ -33,8 +29,11 @@ export function FamilyMemberContainer({famMember}){
       useEffect(() => {
         if(family!== null){
           let famMemElementsData = family.map((famMem) => {
+            console.log(famMem)
             return <FamilyMemberCard 
-                    name={famMem.firstName + famMem.lastName}/>
+                    name={famMem.firstName + " " + famMem.lastName}
+                    id={famMem.id}
+                    highlights={famMem.highlights}/>
           })
           setFamilyMemberElements(famMemElementsData)
         }
@@ -46,7 +45,6 @@ export function FamilyMemberContainer({famMember}){
     return (   
         <div>
           {familyMemberElements && famMember && <div className="FamilyMember-container">{familyMemberElements}</div>}
-          <p>Hello from the familyMemberContainer</p>
         </div>
 
     )

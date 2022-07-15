@@ -5,7 +5,7 @@ import { AddHighlightModal } from './AddHighlightModal';
 import { DisplayHighlightsModal } from './DisplayHighlightsModal';
 
 
-export default function FamilyMemberCard({name, id}) {
+export default function HighlightCard({description, date, imageURL, name}) {
   const [addHighlightsOpen, setAddHighlightsOpen] = React.useState(false);
     const handleOpen = () => setAddHighlightsOpen(true);
     const handleClose = () => setAddHighlightsOpen(false);
@@ -25,8 +25,8 @@ export default function FamilyMemberCard({name, id}) {
     className="FamilyMember-card"
       
       sx={{
-        width: 300,
-        height: 300,
+        width: 800,
+        height: 100,
         backgroundColor: 'primary.dark',
         '&:hover': {
           backgroundColor: 'primary.main',
@@ -34,21 +34,10 @@ export default function FamilyMemberCard({name, id}) {
     
         },
       }}>
-        
-          <h2>{name} </h2>
-          <AddHighlightModal 
-                addHighlightsOpen={addHighlightsOpen}
-                setAddHighlightsOpen={setAddHighlightsOpen}
-                handleOpen={handleOpen}
-                handleClose={handleClose} 
-                familyMemberId={id}/>
-          <DisplayHighlightsModal
-            displayHighlightModalOpen={displayHighlightModalOpen}
-            setDisplayHighlightModalOpen={setDisplayHighlightModalOpen}
-            handleDisplayOpen={handleDisplayOpen}
-            handleDisplayClose={handleDisplayClose} 
-            name={name}
-            familyMemberId={id}/>
+          
+          <h2>Highlight: {description} </h2>
+          <h2>{date} </h2>
+          
       </Box>
     
   );

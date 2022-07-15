@@ -52,3 +52,19 @@
   display: flex;
   
 }
+
+#addModalTitle{
+  color: black;
+}
+
+#addModalContainer {
+  text-justify: right;
+}
+
+#displayModalTitle{
+  color:black;  
+}
+
+/* #highlightsContainer {
+  display: flexbox;
+} */
