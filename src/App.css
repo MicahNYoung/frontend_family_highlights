@@ -47,13 +47,19 @@
 
 .FamilyMember-card {
   margin: 10px;
+  border-radius: 5px;
 }
 .FamilyMember-container {
   display: flex;
-  
+  /* flex-direction: column; */
+  align-self: center;
+  justify-items: center;
+  align-items: center;
+  max-width: 100%;
+  flex-wrap: wrap;
 }
 
-#addModalTitle{
+#addModalTitle {
   color: black;
 }
 
@@ -61,10 +67,19 @@
   text-justify: right;
 }
 
-#displayModalTitle{
-  color:black;  
+#displayModalTitle {
+  color: black;
 }
 
 /* #highlightsContainer {
   display: flexbox;
 } */
+
+.trashCanButton {
+  color: black;
+  background-color: black;
+}
+
+.searchBar {
+  background-color: blueviolet;
+}

@@ -1,51 +1,48 @@
-import React, { useEffect, useRef } from "react"
-import { useSearchParams } from "react-router-dom"
-import FamilyMemberCard from "./FamilyMemberCard"
+import React, { useEffect, useState } from "react";
+import FamilyMemberCard from "./FamilyMemberCard";
 
-export function FamilyMemberContainer({famMember}){
-
-
-  const [family, setFamily] = React.useState(null)
-  const [familyMemberElements, setFamilyMemberElements] = React.useState(null)
-  // let familyMemberElements = useRef([]);
-
+export function FamilyMemberContainer({ familyMember, searchInput, family }) {
+  const [familyMemberElements, setFamilyMemberElements] = useState(null);
+  const [famMemElementsData, setFamMemElementsData] = useState(null);
 
   useEffect(() => {
-    console.log(famMember)
-    if(famMember){
-      fetch("http://localhost:8080/familymember/getfamily/" + famMember.id)
-      .then(response => {
-        return response.json();
-      }) 
-      .then(data => {
-        setFamily(data)
-      })
+    if (family && searchInput !== "") {
+      let filteredFamMemElementsData = family.filter((famMem) => {
+        return (
+          famMem.firstName.toLowerCase().includes(searchInput.toLowerCase()) ||
+          famMem.lastName.toLowerCase().includes(searchInput.toLowerCase())
+        );
+      });
+      let famMemElementsData = filteredFamMemElementsData.map((famMem) => {
+        return (
+          <FamilyMemberCard
+            name={famMem.firstName + " " + famMem.lastName}
+            id={famMem.id}
+            highlights={famMem.highlights}
+          />
+        );
+      });
+      setFamilyMemberElements(famMemElementsData);
     }
-    
-  },[famMember])
-   
-  //family was coming back null
-    
-      useEffect(() => {
-        if(family!== null){
-          let famMemElementsData = family.map((famMem) => {
-            console.log(famMem)
-            return <FamilyMemberCard 
-                    name={famMem.firstName + " " + famMem.lastName}
-                    id={famMem.id}
-                    highlights={famMem.highlights}/>
-          })
-          setFamilyMemberElements(famMemElementsData)
-        }
-        
+    if (family && searchInput === "") {
+      let famMemElementsData = family.map((famMem) => {
+        return (
+          <FamilyMemberCard
+            name={famMem.firstName + " " + famMem.lastName}
+            id={famMem.id}
+            highlights={famMem.highlights}
+          />
+        );
+      });
+      setFamilyMemberElements(famMemElementsData);
+    }
+  }, [family, searchInput]);
 
-      },[family])
-    
-    console.log("familyMemberElements: " + familyMemberElements)
-    return (   
-        <div>
-          {familyMemberElements && famMember && <div className="FamilyMember-container">{familyMemberElements}</div>}
-        </div>
-
-    )
+  return (
+    <div>
+      {familyMemberElements && (
+        <div className="FamilyMember-container">{familyMemberElements}</div>
+      )}
+    </div>
+  );
 }

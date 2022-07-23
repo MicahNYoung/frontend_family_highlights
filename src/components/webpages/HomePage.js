@@ -1,18 +1,32 @@
-import React, {useSearchParams} from "react"
-import {FamilyMemberContainer} from "../hompage_components/FamilyMemberContainer"
-import Navbar from "../Navbar"
-import {AddHighlightModal} from "../hompage_components/AddHighlightModal"
+import React, { useEffect, useState } from "react";
+import { FamilyCode } from "../FamilyCode";
+import { FamilyMemberContainer } from "../hompage_components/FamilyMemberContainer";
+import Navbar from "../Navbar";
 
-export function HomePage({familyMember, isNotLoginPage}){
-    const [familyMemberId, setFamilyMemberId] = React.useState()
-    const [familyId, setFamilyId] = React.useState()  
-    
+export function HomePage({ familyMember, page }) {
+  const [searchInput, setSearchInput] = useState("");
+  const token = sessionStorage.getItem("token");
+  const [family, setFamily] = useState(null);
 
-    return (
-        <div>
-            <Navbar isNotLoginPage={isNotLoginPage}/>
-            <FamilyMemberContainer famMember={familyMember}/>
+  useEffect(() => {
+    fetch("http://localhost:8080/familymember/getfamily/" + token)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setFamily(data);
+      });
+  }, [familyMember, token]);
 
-        </div>
-    )
+  return (
+    <div>
+      <Navbar page={page} setSearchInput={setSearchInput} />
+      <FamilyCode />
+      <FamilyMemberContainer
+        familyMember={familyMember}
+        searchInput={searchInput}
+        family={family}
+      />
+    </div>
+  );
 }

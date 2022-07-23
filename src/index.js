@@ -1,19 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
+import './index.css';
 import reportWebVitals from './reportWebVitals';
-import {FamilyMemberContainer} from './components/hompage_components/FamilyMemberContainer'
-import LoginPage from "./components/webpages/LoginPage"
-import CreateUser from "./components/webpages/CreateUser"
-import { HomePage } from './components/webpages/HomePage';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
 root.render(
-  <App/>,document.getElementById('root')
+  <BrowserRouter>
+    <App/>
+  </BrowserRouter>
     
  
 );
