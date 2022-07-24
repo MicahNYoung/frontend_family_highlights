@@ -3,11 +3,11 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Container } from "@mui/system";
 import bcrypt from "bcryptjs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { NewFamily } from "../createuser_components/NewFamily";
 import Navbar from "../Navbar";
-
+import { ErrorMessage } from "../validation/ErrorMessage";
 const salt = bcrypt.genSaltSync(10);
 
 export function CreateUser({ page }) {
@@ -25,14 +25,16 @@ export function CreateUser({ page }) {
   const [needFamilyId, setNeedFamilyId] = useState(false);
 
   const [allFieldsFilled, setAllFieldsFilled] = useState(false);
-  const [response, setResponse] = useState();
+  const [response, setResponse] = useState({ id: 0 });
+  const [errors, setErrors] = useState();
+  const [errorsArr, setErrorsArr] = useState();
 
   const navigate = useNavigate();
 
   const handleClick = (e) => {
     password = bcrypt.hashSync(password, salt);
 
-    e.preventDefault();
+    // e.preventDefault();
     const familyMember = {
       email,
       firstName,
@@ -56,6 +58,7 @@ export function CreateUser({ page }) {
 
     if (familyMember.familyId !== "") {
       if (!allFieldsFilled) {
+        console.log(familyMember.familyId);
         fetch(
           "http://localhost:8080/familymember/add?familyId=" +
             familyMember.familyId,
@@ -67,16 +70,19 @@ export function CreateUser({ page }) {
         )
           .then((res) => res.json())
           .then((data) => setResponse(data));
-        if (response.id) {
-          navigate({
-            pathname: "/",
-          });
-        }
       }
     }
   };
-
-  const [title, setTitle] = React.useState("");
+  useEffect(() => {
+    if (response.id) {
+      navigate({
+        pathname: "/",
+      });
+    } else {
+      setErrors(response);
+    }
+  }, [response]);
+  console.log(errors);
 
   const handleNewFamily = (e) => {
     setNeedFamilyId(true);
@@ -84,6 +90,7 @@ export function CreateUser({ page }) {
   return (
     <div>
       <Navbar page={page} />
+      {errors && <ErrorMessage errors={errors} />}
       {allFieldsFilled && <h2>Please fill out every field</h2>}
       <Container className="FamilyMember-form">
         <h1>New User</h1>
