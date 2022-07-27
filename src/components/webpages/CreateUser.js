@@ -23,8 +23,10 @@ export function CreateUser({ page }) {
   const [familyName, setFamilyName] = useState("");
   const [needFamilyId, setNeedFamilyId] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [responseHeaders, setResponseHeaders] = useState("");
+  const [responseStatus, setResponseStatus] = useState("");
 
-  const [response, setResponse] = useState({ id: 0 });
+  const [response, setResponse] = useState("");
   // const [errors, setErrors] = useState();
 
   const [hasError, setHasError] = useState(false);
@@ -55,7 +57,16 @@ export function CreateUser({ page }) {
     }
   }
 
-  function getFamilyIdValidationMessage(familyId) {}
+  function getFamilyIdValidationMessage(familyId) {
+    if (formSubmitted) {
+      console.log(responseHeaders);
+      if (familyId === "") {
+        return "Field is blank!";
+      } else if (response === "Your family ID is invalid") {
+        return response;
+      }
+    }
+  }
 
   const handleClick = (e) => {
     password = bcrypt.hashSync(password, salt);
@@ -94,7 +105,7 @@ export function CreateUser({ page }) {
   // console.log(response.status);
   useEffect(() => {
     console.log(response);
-    if (response === "Created") {
+    if (response !== "" && response === "Created") {
       navigate({
         pathname: "/",
       });
@@ -220,8 +231,12 @@ export function CreateUser({ page }) {
               label="Your Family ID"
               value={familyId}
               onChange={(e) => setFamilyId(e.target.value)}
-              error={formSubmitted && familyId === ""}
-              helperText={formSubmitted && familyId === "" ? "Empty!" : " "}
+              error={getFamilyIdValidationMessage(familyId)}
+              helperText={
+                getFamilyIdValidationMessage(familyId)
+                  ? getFamilyIdValidationMessage(familyId)
+                  : " "
+              }
             />
             <div>
               {needFamilyId === true && (
