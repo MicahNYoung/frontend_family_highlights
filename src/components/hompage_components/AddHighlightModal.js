@@ -8,15 +8,21 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import React, { useState } from "react";
 
 const style = {
+  display: "flex",
+  flexDirection: "column",
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
+  width: "50%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
+};
+const highlightStyle = {
+  width: 500,
+  maxWidth: "75%",
 };
 
 export function AddHighlightModal({
@@ -28,7 +34,7 @@ export function AddHighlightModal({
   setDisplayHighlightModalOpen,
 }) {
   const [description, setDescription] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
 
   const [imageURL, setImageURL] = useState("");
 
@@ -63,12 +69,17 @@ export function AddHighlightModal({
             <Box
               sx={{
                 "& .MuiTextField-root": { m: 1, width: "25ch" },
+                width: 500,
               }}
               noValidate
               autoComplete="off"
             >
               <div>
                 <TextField
+                  sx={{ "& .MuiTextField-root": { width: "8ch" } }}
+                  // fullWidth
+                  className="HighlightFormInput"
+                  id="fullWidth"
                   required
                   id="outlined-required"
                   label="Highlight"
@@ -81,7 +92,7 @@ export function AddHighlightModal({
                     label="Date"
                     inputFormat="MM/dd/yyyy"
                     value={date}
-                    onChange={(e) => setDate(e.target.value)}
+                    onChange={(newDate) => setDate(newDate)}
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </LocalizationProvider>

@@ -83,3 +83,12 @@
 .searchBar {
   background-color: blueviolet;
 }
+
+.newHighlightForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.HighlightFormInput.Mui-required {
+  width: 81ch;
+}
